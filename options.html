@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DailyJS dashboard</title>
+  <link rel="stylesheet" href="codemirror/codemirror-compressed.css">
+  <link rel="stylesheet" href="codemirror/ambiance.css">
+  <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <script src="codemirror/codemirror-compressed.js"></script>
+  <script src="codemirror/javascript.js"></script>
+
+</head>
+<style>
+body{
+  margin:0px;
+  padding:0px;
+  font-size: initial;
+}
+
+hr{
+  margin:0px;
+  color:black;
+  background:black;
+}
+#header{
+  height:45px;
+}
+#left_container{
+  float:left;
+  width:35%;
+  height:100%;
+  padding:10px;
+  font-family: 'Oswald',arial narrow,sans-serif;
+  /*font-family: 'Voltaire',Arial,sans-serif;*/
+}
+#right_container{
+  float:right;
+  width:60%;
+  height:100%;
+}
+#function_list_textarea{
+  width:97%;
+  height:45px;
+  color:#FFF;
+  background: #202020;
+  overflow: auto;
+  border: 0px;
+  padding: 10px;
+  margin-left: 0px;
+  vertical-align: text-top !important;
+  font-family: monospace;
+}
+#textarea_view{
+  width:97%;
+  height:100%;
+  font-size:16px;
+  /*color:#FFF;
+  opacity: 0.6;
+  background: black;
+  overflow: auto;
+  border: 0px;
+  padding: 10px;
+  margin-left: 0px;
+  vertical-align: text-top !important;
+  font-family: monospace;*/
+}
+#header_span{
+  font-size:32px;
+  font-weight: bold;
+  font-family: monospace;
+  line-height: 46px;
+}
+
+#example_function{
+  font-size:16px;
+}
+#example_function_code{
+  color: #2ec866;
+}
+#function_list_label,#function_definitions_label{
+  font-weight: bold;
+  font-size: 16px;
+}
+#function_definitions_label{
+  /*
+  position: relative;
+  top:20px;
+  background-color: red;
+  font-size: 18px;
+  */
+}
+</style>
+<body>
+
+<!--
+Favorite color:
+<select id="color">
+ <option value="red">red</option>
+ <option value="green">green</option>
+ <option value="blue">blue</option>
+ <option value="yellow">yellow</option>
+</select>
+
+<label>
+  <input type="checkbox" id="like">
+  I like colors.
+</label>
+
+<div id="status"></div>
+<button id="save">Save</button>-->
+<!--
+<div id="text_editor">
+  <textarea id="text_editor_area"></textarea>
+</div>
+
+<div id="stored_text_view">
+  <textarea id="stored_text_view_area"></textarea>
+</div>
+-->
+<div id="header">
+<span id="header_span"><span style="background-color:#2ec866;padding:4px;line-height: 46px;color:white;padding-left:15px;">Daily</span><span style="color:#2ec866;background-color:black;padding:4px;line-height: 46px;">JS</span> Dashboard</span>
+</div>
+<hr>
+<div id = "left_container">
+  <div id="rules_for_functions">
+    <h2>Rules for writing functions</h2>
+    <ul>
+      <li>Your function name must be unique</li>
+      <li>The function must accept a single string as an input.</li>
+      <li>The value returned by the function must be a string.</li>
+      <li>Do not enter comments</li>
+      <li>Do not make functions supporting your function, outside the function.</li>
+      <li>Use only single quotes for addressing strings or string like constructs.</li>
+    </ul>
+
+  </div>
+
+  <div id="suggestions">
+    <h2>Suggestions</h2>
+    <ul>
+      <li>Use the same notation as the inbuilt functions</li>
+      <li>Use compress/prettify while storing/modifying functions accordingly. This improves the loading time and the space consumed</li>
+    </ul>
+
+  </div>
+
+  <div id="example_function">
+    <h3>Example:</h3>
+    <pre id="example_function_code">
+    var encodeURIFn = function(uri){
+      return encodeURIComponent(uri);
+    };
+    var helloFn = function(uri){
+      return ('hello '+uri);
+    };
+    </pre>
+  </div>
+</div>
+
+<div id="right_container">
+  <div>
+    <label for="function_list_textarea" id="function_list_label">Functions List :</label>
+    <textarea id="function_list_textarea"></textarea>
+    <label for="textarea_view" id="function_definitions_label">Function Definitions :</label>
+    <textarea id="textarea_view"></textarea>
+    <div id="bytes_used"></div>
+    <div id="status"></div>
+    <button id="save">Save</button>
+  </div>
+</div>
+<script src="options.js"></script>
+</body>
+</html>

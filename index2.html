@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html style="opacity:1;">
+<head>
+  <title>syncFileSystem-test</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type='text/javascript' src='jquery.js'></script>
+  <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <!--<link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">-->
+<style type="text/css">
+body{
+  margin:0px;
+  padding:0px;
+  font-size: 14px;
+}
+#main_container{
+  min-height:200px;
+  min-width:200px;
+}
+.selected{
+    background: #ebf2fc;
+}
+ul{
+list-style-type: none;
+padding: 0px;
+margin: 0px;
+width: 150px;
+border:1px solid #a8a8a8;
+border-top:0px;
+}
+li:hover{
+  background: #ebf2fc;
+  cursor: pointer;
+}
+#tags{
+width:146px;
+border:1px solid #a8a8a8;
+outline:none;
+padding-left: 2px;
+padding-right: 2px;
+
+}
+#inputToFunction{
+  outline:none;
+  border:1px solid #a8a8a8;
+  padding-left:5px;
+  width:180px;
+  margin-top:10px;
+}
+#main_container{
+  padding:5px;
+}
+hr{
+  padding:0px;
+  margin:0px;
+}
+#copy_to_clipboard{
+  background-color: transparent;
+  padding:4px;
+  cursor: pointer;
+}
+
+#output_textarea{
+  width:180px;
+  margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+ 
+    <div id="main_container">
+    <div>
+
+       
+
+        
+
+        <!-- <select style="width:100%;" class="constantHeight uniformFont constantPadding" id="functionsList">
+          <option value="rgb_to_hex">RGB To Hex</option>
+          <option value="hex_to_rgb">Hex To RGB</option>
+          <option value="encode_URI">Encode URI</option>
+          <option value="decode_URI">Decode URI</option>
+          <option value="md5">MD5 Hash</option>
+        </select> -->
+
+        <input type='text' id="tags" placeholder='Select function'/>
+        <button id='settings_button'>+</button>
+        
+        <div id="autocomplete_div">
+          <ul id="autocomplete_list">
+            <li>rgb to hex</li>
+            <li>hex to rgb</li>
+            <li>encode URI</li>
+            <li>decode URI</li>
+            <li>MD5 Hash</li>
+          </ul>
+        </div>
+        <input type='text' id='inputToFunction' placeholder='input'>
+        
+    </div>
+
+    <!-- Add a new function link -->
+    <!--<a id="display_dashboard">Add a new function</a>-->
+
+    <!-- Input for the function -->
+    <!-- <div style="width:100%;height:36px;margin-bottom:10px;">
+    
+      <div style="float:right">
+        <a class="btn btn-flat btn-large" id="go_button"></a>
+        </div>
+
+        <div style="width:auto;overflow:hidden;">
+             <textarea rows ="1" cols="40" id="input_textarea" placeholder="INPUT" class="constantHeight uniformFont constantPadding"></textarea>
+      </div>
+    </div>
+ -->
+   
+
+    <!-- Output of the function -->
+    
+     <textarea rows ="4" cols="20" id="output_textarea" placeholder="OUTPUT" class=""></textarea>
+
+
+
+    <div id="notification">
+      <span id="notification_span"></span>
+    </div>
+    
+
+    <!--<button id = "read" />Read</button>
+    <button id = "write" />Write</button>
+    <p id="hash">My name is pranav</p>-->
+    </div>
+  <script src="main.js"></script>
+</body>
+</html>
