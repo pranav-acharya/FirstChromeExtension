@@ -1,4 +1,4 @@
-var ENTER_KEYCODE = 13;//enter keycode value for keyup event
+var ENTER_KEYCODEs = 13;//enter keycode value for keyup event
 window.onload = function(){
 
   document.querySelector("#searchField").addEventListener("keyup",function(){
