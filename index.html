@@ -3,103 +3,11 @@
 <head>
   <title>TOPKEK</title>
   <link rel="stylesheet" href="styles.css">
-<style type="text/css">
-body{
-  min-width: 400px;
-  background-color: #fbfbfb;
-}
-::-webkit-scrollbar {
-    width: 10px;
-    height:10px;
-}
-
-::-webkit-scrollbar-track {
-    width:10px;
-    background-color: rgba(100, 100, 100, .1);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #C0C0C0;
-    border: 2px solid transparent;
-    border-radius: 9px;
-    background-clip: content-box;
-}
-#result{
-  /*min-height: 100px;*/
-  max-height:300px;
-  overflow: auto;
-  margin-top:10px;
-  font-size: 14px !important;
-}
-
-#searchField{
-  width: 329px;
-  line-height: 200%;
-  height: 29px;
-  padding-left: 5px;
-  padding-right: 5px;
-  font-size: 15px;
-  border:1px solid #c0c0c0;
-  border-right:0px;
-}
-#searchField:focus{
-  outline:none;
-  border:1px solid #4d90fe;
-  border-right:0px;
-}
-
-#searchButton{
-  height: 33px;
-  margin: 0px;
-  background-color: #4b8df7;
-  outline: none;
-  border: 1px solid #3079ed;
-  color: white;
-  font-weight: bold;
-  cursor: default;
-}
-#searchButton:hover{
-  border:1px solid #2f5bb7;
-  background-color: #4185f3;
-}
-/*http://google-dictionary.so8848.com */
-.std{
-  padding:0px !important;
-}
-.std ul{
-  margin: 0px;
-  
-}
-.std ol{
-  margin:0px;
-
-}
-.answer{
-  background-color:rgba(201, 239, 248, 0.4);
-  padding:5px;
-  border-radius: 5px;
-}
-.error{
-  background-color: rgba(255, 204, 204, 0.4);
-  margin-top:10px;
-  padding:5px;
-  border-radius: 5px;
-}
-.answerSingle{
-  background-color:rgba(201, 239, 248, 0.4);
-  padding:5px;
-  border-radius: 5px;
-  font-size: 14px;
-}
-.converted{
-  font-size:24px;
-}
-</style>
-
 </head>
 
 <body>
-  <input type="text" placeholder="Search" results id="searchField" autocomplete="on" autofocus="autofocus"/><button id="searchButton">Search</button>
+  <input type="text" placeholder="Search" results id="searchField" autocomplete="on" autofocus="autofocus"/>
+  <!-- <button id="searchButton">Search</button> -->
   <div id='result'></div>
   <!-- <iframe src="" id='myFrame'></iframe> -->
   <script src="main.js"></script>

@@ -1,26 +1,58 @@
 var ENTER_KEYCODE = 13;//enter keycode value for keyup event
+var bg = chrome.extension.getBackgroundPage();
+
+window.addEventListener("unload", function() {
+  bg.popupUnloaded();
+}, false);
+
+
 window.onload = function(){
 
   document.querySelector("#searchField").addEventListener("keyup",function(){
     if(event.keyCode == ENTER_KEYCODE)
       processInput(document.getElementById('searchField').value);
   });
-  document.querySelector("#searchButton").addEventListener("click",function(){
-    processInput(document.getElementById('searchField').value);
-  });
 
-  //document.querySelector("#myFrame").src = "http://www.w3schools.com/tags/ref_colorpicker.asp";
- 
+
+  // document.querySelector("#searchButton").addEventListener("click",function(){
+  //   processInput(document.getElementById('searchField').value);
+  // });
+
+  // document.querySelector("#myFrame").src = "http://www.w3schools.com/tags/ref_colorpicker.asp";
+
 }
 
 function processInput(input){
   clearResult();
-  var temp = input.split(" ");
-  if(temp[0].toLowerCase() == "define"){
+  var temp = input.trim().split(" ");
+  temp[0] = temp[0].toLowerCase();
+  if(temp.length == 1){
+    if(temp[0] == "note" || temp[0] == "notepad"){
+      showNotepad();
+      return;
+    }else if(temp[0] == "settings" || temp[0] == "preferences" ){
+      chrome.tabs.create({ url: "options.html" });
+    }
+    //provide help to user for specific command
+    for(var i=0;i<commands.length;i++){
+      if(commands[i].name == temp[0]){
+        var outputString = "<div id='desc'>"+commands[i].description+"</div>";
+        outputString += "<div id='sub_desc'>"+commands[i].sub_description+"</div>";
+        outputString += "<div id='example'>"+commands[i].example+"</div>";
+        output(outputString);
+        break;
+      }else{
+        if(i == commands.length -1 ){
+          output("This command wasn't found!");
+        }
+      }
+    }
+  }
+  else if(temp[0] == "define"){
     var actual_input = input.replace(temp[0]+" ","");
     define(actual_input);
   }
-  else if(temp[0].toLowerCase() == "wiki"){
+  else if(temp[0] == "wiki"){
     var actual_input = input.replace(temp[0]+" ","");
     wiki(actual_input);
   }
@@ -28,9 +60,9 @@ function processInput(input){
     currencyConversion(input);
   }
   else{
-    chat(input);  
+    chat(input);
   }
-  
+
 }
 
 
@@ -74,7 +106,7 @@ function currencyConversion(input){
   to = temp[i+1];
   if(temp.length == 3){//no AMOUNT is specified
     amount = 1;
-  } 
+  }
   else if(temp[i+2]){
     amount = temp[i+2];
   }else{
@@ -108,7 +140,7 @@ function calc(input){
 function chat(input){
   var query = input.split(" ").join("+");
   var url = "http://www.botlibre.com/rest/botlibre/form-chat?instance=165&message="+query;
-  ajax('GET',url,'xml', function(xhr){
+  ajax('GET',url,'XML', function(xhr){
     console.log("done");
     var a = xhr.responseXML.getElementsByTagName('message')[0].firstChild.nodeValue;
     output(a);
@@ -116,7 +148,31 @@ function chat(input){
 }
 
 
+//CALCULATOR
+function calc(expression){
 
+}
+
+//notepad
+function showNotepad(){
+  var textarea = document.createElement("textarea");
+  textarea.innerHTML = bg.getNotepadData();
+  textarea.id = "notepad";
+  textarea.addEventListener("keyup",function(){
+    document.getElementById('bytesUsed').innerHTML = textarea.value.length + "/8192 bytes used";
+    bg.updateNotepadData(textarea.value);
+  });
+  document.getElementById('result').innerHTML = "";
+  document.getElementById('result').appendChild(textarea);
+  document.getElementById('notepad').focus();
+  var caretPos = document.getElementById('notepad').value.length;
+  document.getElementById('notepad').setSelectionRange(caretPos, caretPos);
+
+  var bytesInUse = document.createElement("p");
+  bytesInUse.id = "bytesUsed";
+  bytesInUse.innerHTML = textarea.value.length + "/8192 bytes used";
+  document.getElementById('result').appendChild(bytesInUse);
+}
 
 
 
@@ -131,7 +187,7 @@ function ajax(type,url,response_type,callback){
   /*xhr.onload = function(xhr) {
     callback(xhr);
   };*/
-  
+
   xhr.open(type, url);
   xhr.responseType = response_type;
   xhr.onreadystatechange = function() {
@@ -144,7 +200,7 @@ function ajax(type,url,response_type,callback){
     }else{
       //errorMessage("An error occurred");
     }
-    
+
   }
   xhr.send();
   document.getElementById("result").innerHTML="<div class='Loading'><span>Loading</span></div>";
@@ -165,7 +221,7 @@ function output(output,input){
     }
     document.getElementById('result').appendChild(answer);
   }
-  
+
 
 }
 
@@ -176,3 +232,42 @@ function errorMessage(errorMsg){
 function clearResult(){
   document.getElementById('result').innerHTML = "";
 }
+
+var commands = [
+  {
+    name: "help",
+    description: "Please try typing the following",
+    sub_description: "<ul><li>define</li><li>wiki</li></urll>",
+    example:""
+  },{
+    name: "define",
+    description: "Finds google-dictionary meaning of the word mentioned next",
+    sub_description: "Uses http://google-dictionary.so8848.com",
+    example:"define browser"
+  },{
+    name: "wiki",
+    description: "Searches wikipedia for the mentioned topic",
+    sub_description: "uses www.wikipedia.org , If found it directly displays the initial few paragraphs of the topic",
+    example:"wiki browser"
+  },{
+    name: "notess", //multiple keywords: scratch, note, notepad
+    description: "Opens a quick notepad wherein you can save data",
+    sub_description: "",
+    example:""
+  },{
+    name: "reminder", //multiple keywords: remind, reminders, reminder
+    description: "Opens your reminders if you have set any",
+    sub_description: "",
+    example:""
+  },{
+    name: "settings", //options , settings, preferences
+    description: "Opens the settings page where you can customize",
+    sub_description: "",
+    example:""
+  },{
+    name: "quote", //quote
+    description: "Fetches the quote of the day",
+    sub_description: "",
+    example:""
+  }
+];
