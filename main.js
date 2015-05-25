@@ -30,6 +30,9 @@ function processInput(input){
     if(temp[0] == "note" || temp[0] == "notepad"){
       showNotepad();
       return;
+    }else if(temp[0] == "links"){
+      showLinks();
+      return;
     }else if(temp[0] == "settings" || temp[0] == "preferences" ){
       chrome.tabs.create({ url: "options.html" });
     }
@@ -175,7 +178,49 @@ function showNotepad(){
 }
 
 
+function showLinks(){
+  //user input shall be used to add link and search for existing links
+  var storedLinks = bg.getLinksData();
+  var localStoredLinks = storedLinks;
+  var userInput = document.createElement("input");
+  userInput.placeholder = "Link to be saved.";
+  userInput.id = "linksInput";
+  userInput.addEventListener('keyup',function(){
 
+    for(var i=0;i<storedLinks.length;i++){
+      var linksOption = document.createElement("option");
+    }
+  });
+  var addLinkButton = document.createElement("button");
+  addLinkButton.innerHTML = "+";
+  addLinkButton.addEventListener('click',function(){
+    bg.addLinksData(userInput.value);
+  });
+
+  var saveCurrentPageButton = document.createElement("button");
+  saveCurrentPageButton.innerHTML = "Save current page";
+
+
+  var selectList = document.createElement('select');
+  selectList.id = 'LinkSelectList';
+  selectList.multiple = 'multiple';
+
+  for(var i=0;i<storedLinks.length;i++){
+    var linkOption = document.createElement('option');
+    linkOption.text = storedLinks[i];
+    selectList.appendChild(linkOption);
+  }
+
+  //Appending everything in order to the UI
+  document.getElementById('result').innerHTML = "";
+  document.getElementById('result').appendChild(userInput);
+  document.getElementById('result').appendChild(addLinkButton);
+  document.getElementById('result').appendChild(saveCurrentPageButton);
+  document.getElementById('result').appendChild(selectList);
+
+  userInput.focus();
+  //Add filtering logic for links here
+}
 
 /*************HEPLER FUNCTIONS******************/
 // type - GET/POST

@@ -1,17 +1,18 @@
 var notepadData;
+var linksData;
 var settings;
 //load all settings here, from background page
 chrome.storage.sync.get(null, function(items) {
   notepadData = (items.notepadData)?items.notepadData:"";
+  linksData = (items.linksData)?items.linksData:[];
 });
-
 
 function popupUnloaded(){
   console.log("popup unloaded");
 
   chrome.storage.sync.set({
     notepadData: notepadData,
-
+    linksData: linksData,
   }, function() {
     console.log("data saved");
   });
@@ -22,6 +23,16 @@ function updateNotepadData(data){
 }
 function getNotepadData(){
   return notepadData;
+}
+
+function setLinksData(data){
+  linksData = data;
+}
+function getLinksData(){
+  return linksData;
+}
+function addLinksData(data){
+  linksData.push(data);
 }
 // //var a = 10;
 // //console.log(a);
