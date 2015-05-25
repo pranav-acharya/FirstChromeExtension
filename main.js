@@ -1,5 +1,10 @@
 var ENTER_KEYCODE = 13;//enter keycode value for keyup event
 var bg = chrome.extension.getBackgroundPage();
+var currentTabUrl;
+chrome.tabs.getSelected(function(tab){
+  console.log(tab);
+  currentTabUrl = tab.url;
+});
 
 window.addEventListener("unload", function() {
   bg.popupUnloaded();
@@ -12,13 +17,6 @@ window.onload = function(){
     if(event.keyCode == ENTER_KEYCODE)
       processInput(document.getElementById('searchField').value);
   });
-
-
-  // document.querySelector("#searchButton").addEventListener("click",function(){
-  //   processInput(document.getElementById('searchField').value);
-  // });
-
-  // document.querySelector("#myFrame").src = "http://www.w3schools.com/tags/ref_colorpicker.asp";
 
 }
 
@@ -182,42 +180,89 @@ function showLinks(){
   //user input shall be used to add link and search for existing links
   var storedLinks = bg.getLinksData();
   var localStoredLinks = storedLinks;
+  var MIN_NUMBER_OF_CHARACTERS_FOR_FILTER = 0;
   var userInput = document.createElement("input");
-  userInput.placeholder = "Link to be saved.";
+  var prevInput = ""
+  userInput.placeholder = "Filter OR Add new link";
   userInput.id = "linksInput";
   userInput.addEventListener('keyup',function(){
+    var val = userInput.value.trim().toLowerCase();
+    if(val !== prevInput){
+      prevInput = val;
+      document.getElementById('LinkSelectList').innerHTML = "";
 
-    for(var i=0;i<storedLinks.length;i++){
-      var linksOption = document.createElement("option");
+      for(var i=storedLinks.length - 1 ;i >= 0;i--){
+        if(storedLinks[i].toLowerCase().search(val) >= 0){
+          var linksOption = document.createElement("option");
+          linksOption.text = storedLinks[i];
+          var linkOptionImageURL = storedLinks[i].split("/")[0];
+          linksOption.style.backgroundImage = "url('http://www.google.com/s2/favicons?domain="+linkOptionImageURL+"')";
+          linksOption.style.backgroundRepeat = "no-repeat";
+          linksOption.style.paddingTop = "2px";
+          linksOption.style.paddingLeft ="20px";
+          document.getElementById('LinkSelectList').appendChild(linksOption);
+        }
+
+      }
     }
+
   });
   var addLinkButton = document.createElement("button");
   addLinkButton.innerHTML = "+";
   addLinkButton.addEventListener('click',function(){
     bg.addLinksData(userInput.value);
+    storedLinks = bg.getLinksData();
+    document.getElementById('linksInput').value = "";
+    renderList();
+  });
+
+  var removeLinkButton = document.createElement("button");
+  removeLinkButton.innerHTML = "-";
+  removeLinkButton.addEventListener('click',function(){
+    bg.removeLink(document.getElementById('LinkSelectList').value);
+    storedLinks = bg.getLinksData();
+    document.getElementById('linksInput').value = "";
+    renderList();
   });
 
   var saveCurrentPageButton = document.createElement("button");
-  saveCurrentPageButton.innerHTML = "Save current page";
-
+  saveCurrentPageButton.innerHTML = "+ current page";
+  saveCurrentPageButton.addEventListener("click",function(){
+    bg.addLinksData(currentTabUrl);
+    renderList();
+  });
 
   var selectList = document.createElement('select');
   selectList.id = 'LinkSelectList';
   selectList.multiple = 'multiple';
 
-  for(var i=0;i<storedLinks.length;i++){
-    var linkOption = document.createElement('option');
-    linkOption.text = storedLinks[i];
-    selectList.appendChild(linkOption);
-  }
 
+
+  function renderList(){
+    document.getElementById('LinkSelectList').innerHTML = "";
+    for(var i=storedLinks.length - 1 ;i >= 0;i--){
+      var linkOption = document.createElement('option');
+      if( i == storedLinks.length - 1){
+        linkOption.selected = 'selected';
+      }
+      linkOption.text = storedLinks[i];
+      var linkOptionImageURL = (storedLinks[i])?storedLinks[i].split("/")[0]:"";
+      linkOption.style.backgroundImage = "url('http://www.google.com/s2/favicons?domain="+linkOptionImageURL+"')";
+      linkOption.style.backgroundRepeat = "no-repeat";
+      linkOption.style.paddingLeft ="20px";
+      linkOption.style.paddingTop = "2px";
+      document.getElementById('LinkSelectList').appendChild(linkOption);
+    }
+  }
   //Appending everything in order to the UI
   document.getElementById('result').innerHTML = "";
   document.getElementById('result').appendChild(userInput);
   document.getElementById('result').appendChild(addLinkButton);
+  document.getElementById('result').appendChild(removeLinkButton);
   document.getElementById('result').appendChild(saveCurrentPageButton);
   document.getElementById('result').appendChild(selectList);
 
+  renderList();
   userInput.focus();
   //Add filtering logic for links here
 }

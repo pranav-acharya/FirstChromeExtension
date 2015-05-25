@@ -34,6 +34,16 @@ function getLinksData(){
 function addLinksData(data){
   linksData.push(data);
 }
+function removeLink(linkToBeRemoved){
+  if(linkToBeRemoved == "null")
+    linkToBeRemoved = null;
+  for(var i=0;i<linksData.length;i++){
+    if(linksData[i] === linkToBeRemoved){
+      linksData.splice(i,1);
+      break;
+    }
+  }
+}
 // //var a = 10;
 // //console.log(a);
 // var list_of_functions;

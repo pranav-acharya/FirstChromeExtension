@@ -2,16 +2,17 @@
   "name": "TOPKEK",
   "version": "1.0",
   "manifest_version": 2,
- 
+
   "description": "Daily Javascript",
    "options_page": "options.html",
   "permissions": [ "storage",
+  "activeTab",
   "http://google-dictionary.so8848.com/*",
   "http://en.wikipedia.org/*",
   "https://www.google.com/*",
   "https://www.google.co.in/*",
   "http://www.botlibre.com/*" ],
-  
+
   "background":{
   	"scripts": ["background.js"]
   	},
