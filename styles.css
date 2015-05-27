@@ -106,11 +106,18 @@ body{
 #LinkSelectList{
   outline: none;
   width: 100%;
-  font-size: 12.5px;
+  font-size: 13px;
   overflow: auto;
   border: 1px solid #c0c0c0;
   margin-top: 5px;
   height:200px;
+  border-left:0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  background-color:#fbfbfb;
+}
+#LinkSelectList option:checked{
+
 }
 #linksInput{
   outline:none;
@@ -121,4 +128,18 @@ body{
   padding-left: 3px;
   padding-right: 3px;
   margin-right: 5px;
+}
+.linkOption[selected]{
+
+}
+.linkOption{
+  background-repeat: no-repeat;
+  padding-left:20px;
+  padding-top:3px;
+  padding-bottom:3px;
+  background-position-x: 3px;
+  background-position-y: 3px;
+  border-bottom:1px solid #c0c0c0;
+  overflow-wrap: break-word;
+  background-color:white;
 }
