@@ -83,6 +83,15 @@ body{
   padding:5px;
   border-radius: 3px;
   font-size: 14px;
+  border: 1px solid rgba(201, 239, 248, 1);
+
+}
+.answerCurrency{
+  background-color: rgba(208, 252, 206, 1);
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 14px;
+  border: 1px solid rgba(172, 235, 153, 1);
 }
 .converted{
   font-size:24px;
@@ -93,8 +102,10 @@ body{
   padding: 5px;
   outline: none;
   height: 130px;
-  border: 1px solid #c0c0c0;
   font-size: 12px;
+  border: 1px solid #E2DE5F;
+  background-color: #fcf9a2;
+  border-radius: 3px;
 }
 #bytesUsed{
   margin: 0px;
